@@ -18,9 +18,8 @@ model User {
   id                String @id @default(uuid())
   clerkUserId       String @unique
   email             String @unique
-  name              String
-  password          String
-  imageUrl          String
+  name              String?
+  imageUrl          String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   createdRooms      TestimonialSpace[]
