@@ -30,7 +30,7 @@ model TestimonialSpace {
   spaceName         String 
   spaceLogo         String
   customMessage     String
-  questions         String[]
+  questions         String?
   createdAt         DateTime @default(now())
   userId            String
   user              User    @relation(fields: [userId], references: [clerkUserId])
