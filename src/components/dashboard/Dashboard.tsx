@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Video, SmileIcon, Plus } from 'lucide-react'
 import CustomDialog from "./CustomDialog"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 export default function Dashboard() {
   const [spaces, setSpaces] = useState([]);
@@ -61,8 +62,8 @@ export default function Dashboard() {
         <div className="mt-12 space-y-8">
           <h1 className="text-3xl font-bold">Overview</h1>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card icon={<Video className="w-6 h-6" />} title="Videos" value="0" />
-            <Card icon={<SmileIcon className="w-6 h-6" />} title="Video credits" value="2" />
+            <Card icon={<Video className="w-6 h-6" />} title="Text" value="0" />
+            <Card icon={<SmileIcon className="w-6 h-6" />} title="Text credits" value="2" />
             <Card title="Free plan 🥁" value="2" />
           </div>
           <CustomDialog />
@@ -75,7 +76,7 @@ export default function Dashboard() {
                 {spaces.map((space : any) => (
                   <li key={space.id} className="bg-gray-700 rounded-lg p-4">
                     <h3 className="text-xl font-semibold">{space.spaceName}</h3>
-                    <p className="text-gray-400">{space.customMessage}</p>
+                    <Link href={`/spaceresponse/${space.id}`}><Button>see your responses</Button></Link>
                   </li>
                 ))}
               </ul>

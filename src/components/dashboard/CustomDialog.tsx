@@ -41,80 +41,80 @@ export default function CustomDialog() {
 
   return (
     <div className="flex justify-between items-center">
-      <h2 className="text-2xl font-bold">Spaces</h2>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline">Create Space</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] bg-gray-800 text-white border border-gray-700">
-                <DialogHeader>
-                  <DialogTitle>Create Space</DialogTitle>
-                  <DialogDescription className="text-gray-400">
-                    Create a new space for your project.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
-                    </Label>
-                    <Input
-                      onChange={function(e) {
-                        setSpaceName(e.target.value)
-                      }}
-                      id="name"
-                      placeholder="Space name"
-                      className="col-span-3 bg-gray-700 text-white border-gray-600"
-                    />
+        <h2 className="text-2xl font-bold">Spaces</h2>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline">Create Space</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px] bg-gray-800 text-white border border-gray-700">
+                  <DialogHeader>
+                    <DialogTitle>Create Space</DialogTitle>
+                    <DialogDescription className="text-gray-400">
+                      Create a new space for your project.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="name" className="text-right">
+                        Name
+                      </Label>
+                      <Input
+                        onChange={function(e) {
+                          setSpaceName(e.target.value)
+                        }}
+                        id="name"
+                        placeholder="Space name"
+                        className="col-span-3 bg-gray-700 text-white border-gray-600"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="description" className="text-right">
+                        Description
+                      </Label>
+                      <Input
+                        onChange={function(e) {
+                          setCustomMessage(e.target.value)
+                        }}
+                        id="description"
+                        placeholder="Space description"
+                        className="col-span-3 bg-gray-700 text-white border-gray-600"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="description" className="text-right">
+                        logo img url
+                      </Label>
+                      <Input
+                        onChange={function(e){
+                          setSpaceLogo(e.target.value)
+                        }}
+                        id="description"
+                        placeholder="give a logo url"
+                        className="col-span-3 bg-gray-700 text-white border-gray-600"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="description" className="text-right">
+                        question
+                      </Label>
+                      <Input
+                        onChange={function(e){
+                          setQustions(e.target.value)
+                        }}
+                        id="description"
+                        placeholder="add question"
+                        className="col-span-3 bg-gray-700 text-white border-gray-600"
+                      />
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="description" className="text-right">
-                      Description
-                    </Label>
-                    <Input
-                      onChange={function(e) {
-                        setCustomMessage(e.target.value)
-                      }}
-                      id="description"
-                      placeholder="Space description"
-                      className="col-span-3 bg-gray-700 text-white border-gray-600"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="description" className="text-right">
-                      logo img url
-                    </Label>
-                    <Input
-                      onChange={function(e){
-                        setSpaceLogo(e.target.value)
-                      }}
-                      id="description"
-                      placeholder="give a logo url"
-                      className="col-span-3 bg-gray-700 text-white border-gray-600"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="description" className="text-right">
-                      question
-                    </Label>
-                    <Input
-                      onChange={function(e){
-                        setQustions(e.target.value)
-                      }}
-                      id="description"
-                      placeholder="add question"
-                      className="col-span-3 bg-gray-700 text-white border-gray-600"
-                    />
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button type="submit" onClick={function(){
-                    setIsDialogOpen(true);
-                    putSpaceIntoDb();
-                  }}>Create Space</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
+                  <DialogFooter>
+                    <Button type="submit" onClick={function(){
+                      setIsDialogOpen(true);
+                      putSpaceIntoDb();
+                    }}>Create Space</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+    </div>
   )
 }
