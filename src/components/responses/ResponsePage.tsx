@@ -1,10 +1,29 @@
+'use client'
+
 import { Search, Star, ChevronDown, MessageSquare, Video, Heart, Archive, Share2, ExternalLink, Lock, Settings } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
+import Link from 'next/link'
+import { FeedBack } from '@prisma/client'
+import { useEffect, useState } from 'react'
 
-export default function ResponsePage({spaceName} : {spaceName : string}) {
+export default function ResponsePage({spaceName}: {spaceName: string}) {
+  const spaceId = spaceName
+
+  const [feedBack, setFeedBack] = useState<FeedBack[]>([])
+
+  async function getFeedBack() {
+    const response = await fetch(`/api/feedback/${spaceId}`)
+    const data = await response.json()
+    setFeedBack(data)
+  }
+
+  useEffect(() => {
+    getFeedBack()
+  }, [spaceId]) 
+  
+  
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <header className="flex justify-between items-center p-4 border-b border-gray-800">
@@ -15,7 +34,10 @@ export default function ResponsePage({spaceName} : {spaceName : string}) {
           </Avatar>
           <div>
             <h1 className="text-xl font-semibold">{spaceName}</h1>
-            <p className="text-sm text-gray-400">Space public URL: {`https://localhost:3000/${spaceName}`}</p>
+            <p className="text-sm text-gray-400">
+              Space public URL: 
+              <Link href={`/feedback/${spaceName}`}>{`localhost:3000/feedback/${spaceName}`}</Link>
+            </p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
@@ -32,7 +54,6 @@ export default function ResponsePage({spaceName} : {spaceName : string}) {
       </header>
 
       <div className="flex">
-        {/* Sidebar */}
         <aside className="w-64 p-4 border-r border-gray-800">
           <nav>
             <h2 className="text-lg font-semibold mb-4">Inbox</h2>
@@ -61,42 +82,50 @@ export default function ResponsePage({spaceName} : {spaceName : string}) {
           </div>
 
           {/* Testimonial Card */}
-          <Card className="bg-gray-800 text-white">
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs">Text</span>
-                    <Heart className="w-4 h-4 text-red-500" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {feedBack.map((feedback) => (
+              <div key={feedback.id} className="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <div className="flex items-center mb-4">
+                  <Avatar className="w-12 h-12 mr-4">
+                    <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${feedback.name}`} alt={feedback.name} />
+                    <AvatarFallback>{feedback.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-lg font-semibold">{feedback.name}</h3>
+                    <p className="text-sm text-gray-400">{feedback.email}</p>
                   </div>
-                  <div className="flex">
+                </div>
+                <p className="text-gray-300 mb-4">{feedback.content}</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className={`w-5 h-5 ${
+                          i < feedback.noOfStars ? 'text-yellow-400 fill-current' : 'text-gray-600'
+                        }`}
+                      />
                     ))}
+                    <span className="ml-2 text-sm text-gray-400">{feedback.noOfStars}/5</span>
                   </div>
-                  <p className="mt-2 text-gray-300">hsacvquvuq</p>
-                </div>
-                <div className="flex space-x-2">
-                  <Button variant="ghost" size="icon">
-                    <Star className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon">
-                    <Heart className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="mt-4 flex justify-between text-sm text-gray-400">
-                <div>
-                  <p>Name</p>
-                  <p className="text-white">ayush</p>
-                </div>
-                <div>
-                  <p>Submitted At</p>
-                  <p className="text-white">Oct 11, 2024, 8:06:30 PM</p>
+                  <div className="flex space-x-2">
+                    <Button size="sm" variant="ghost">
+                      <Heart className="w-4 h-4 mr-1" />
+                      Like
+                    </Button>
+                    <Button size="sm" variant="ghost">
+                      <Archive className="w-4 h-4 mr-1" />
+                      Archive
+                    </Button>
+                    <Button size="sm" variant="ghost">
+                      <Share2 className="w-4 h-4 mr-1" />
+                      Share
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
         </main>
       </div>
     </div>
